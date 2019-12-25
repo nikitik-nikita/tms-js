@@ -51,3 +51,19 @@ function showResult(lastName) {
 
 let result = showResult('pitt');
 console.log(result);
+
+//форма
+const input = document.getElementById('lastNameInput');
+input.addEventListener("keyup", function (event) {
+        let result = showResult(event.target.value);
+        if (typeof (result) === 'object') {
+            let html = '';
+            for (let key in result) {
+                html += key +': '+ result[key]+ '<br>' ;
+            }
+            document.getElementById('showResultInput').innerHTML = html;
+        } else {
+            document.getElementById('showResultInput').innerHTML = result;
+        }
+    }
+);
