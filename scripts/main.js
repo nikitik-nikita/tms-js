@@ -137,4 +137,4 @@ let resultOfChange = function changeValue(arr) {
     return newArr;
 };
 
-console.log(resultOfChange(arr));
+console.log(resultOfChange(newArr));
