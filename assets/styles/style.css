@@ -1,0 +1,13 @@
+* {
+    margin: 0 auto;
+}
+
+.container {
+    display: flex;
+}
+
+.text-result {
+    margin-top: 10px;
+    height: 70px;
+    width: 170px;
+}

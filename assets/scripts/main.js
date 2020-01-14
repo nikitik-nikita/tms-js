@@ -1,4 +1,4 @@
-//Домашнее задание_1.
+//Домашнее_задание_1_(classwork_2)
 // Задание №1
 let name;
 let manager;
@@ -20,7 +20,7 @@ delete animal.weight;
 animal.color = "ginger";
 console.log(animal);
 
-//Домашнее задание_2.
+//Домашнее_задание_2_(classwork_3)
 const data = [
     {
         firstName: 'Ashton',
@@ -69,7 +69,7 @@ input.addEventListener("keyup", function (event) {
 );
 
 
-//Домашнее задание_3 (classwork_4).
+//Домашнее_задание_3_(classwork_4)
 //(classwork_4)
 const poly = 'репер';
 
@@ -82,7 +82,7 @@ function showResultOfPolyndrom() {
 console.log(showResultOfPolyndrom());
 
 
-//1.
+// Задание №1
 
 function min(a, b) {
     if (a < b) {
@@ -118,7 +118,7 @@ function max(a, b) {
 
 console.log(max(9, 10));
 
-//2.
+// Задание №2
 let arr = [0, 1, 24, 20, 40, 66, 100, 77, 70, 88];
 let newArr = [];
 let resultOfChange = function changeValue(arr) {
@@ -137,4 +137,49 @@ let resultOfChange = function changeValue(arr) {
     return newArr;
 };
 
-console.log(resultOfChange(newArr));
+console.log(resultOfChange(arr));
+
+//Домашнее_задание_4_(classwork_5)
+// Задание №1 (Напишите функцию sum, которая возвращает сумму чисел следующим образом:)
+function sum(a) {
+    return function (b) {
+        return a + b;
+    }
+
+}
+
+console.log(sum(5)(2)); // 7
+
+//Задание №2 (Покрасить абзацы по клику (событие click))
+
+const colors = ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'];
+
+const text1 = document.getElementById('text1');
+const text2 = document.getElementById('text2');
+const text3 = document.getElementById('text3');
+
+const changeTextColor = (element) => {
+    for (i = 0; i <= colors.length;) {
+        return function () {
+            text1.style.color = colors[i];
+            // text2.style.color = colors[i];
+            // text3.style.color = colors[i];
+            i++;
+            if (i > colors.length) {
+                i = 0;
+            }
+        }
+    }
+
+    // text2.style.color = '';
+    // text3.style.color = '';
+
+
+    // text2.style[key] = value;
+    // text3.style[key] = value;
+
+};
+// const changeColor = changeTextColor('color', text1);
+text1.addEventListener('click', changeTextColor(text1));
+text1.addEventListener('click', changeTextColor(text2));
+text1.addEventListener('click', changeTextColor(text3));
