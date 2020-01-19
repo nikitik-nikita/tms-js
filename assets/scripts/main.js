@@ -152,27 +152,83 @@ console.log(sum(5)(2)); // 7
 
 //Задание №2 (Покрасить абзацы по клику (событие click))
 
-const colors = ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'];
+// const colors = ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'];
+//
+// const text1 = document.getElementById('text1');
+// const text2 = document.getElementById('text2');
+// const text3 = document.getElementById('text3');
+//
+// const changeTextColor = () => {
+//     let i = 0;
+//     return function (event) {
+//         event.target.style.color = colors[i];
+//         i++;
+//         if (i === colors.length) {
+//             i = 0;
+//         }
+//     }
+// };
+// const changeColor1 = changeTextColor();
+// const changeColor2 = changeTextColor();
+// const changeColor3 = changeTextColor();
+//
+// text1.addEventListener('click', changeColor1);
+// text2.addEventListener('click', changeColor2);
+// text3.addEventListener('click', changeColor3);
 
+
+////Домашнее_задание_5_(classwork_6)
 const text1 = document.getElementById('text1');
 const text2 = document.getElementById('text2');
 const text3 = document.getElementById('text3');
 
-const changeTextColor = () => {
-    let i = 0;
-    return function (event) {
-        event.target.style.color = colors[i];
-        i++;
-        if (i > colors.length) {
-            i = 0;
+const colors = {
+    data: ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'],
+    [Symbol.iterator]() {
+        return this;
+    },
+    next(id) {
+        if (this[id] === undefined) {
+            this[id] = 0
+        }
+        if (this[id] < this.data.length) {
+            return {
+                done: false,
+                value: this.data[this[id]++]
+            }
+        } else {
+            this[id] = 0;
+            {
+                return {
+                    done: true
+                }
+            }
         }
     }
 };
-const changeColor1 = changeTextColor();
-const changeColor2 = changeTextColor();
-const changeColor3 = changeTextColor();
 
-text1.addEventListener('click', changeColor1);
-text2.addEventListener('click', changeColor2);
-text3.addEventListener('click', changeColor3);
+const changeStyle = id => event => {
+    event.target.style.color = colors.next(id).value;
+};
+text1.addEventListener('click', changeStyle(Symbol()));
+text2.addEventListener('click', changeStyle(Symbol()));
+text3.addEventListener('click', changeStyle(Symbol()));
 
+// Пузырёк
+const dataBubble = [4, 56, 33, 42, 15];
+const bubbleSort = (arr) => {
+    for (var i = 0, endI = arr.length - 1; i < endI; i++) {
+        var wasSwap = false;
+        for (var j = 0, endJ = endI - i; j < endJ; j++) {
+            if (arr[j] > arr[j + 1]) {
+                var swap = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = swap;
+                wasSwap = true;
+            }
+        }
+        if (!wasSwap) break;
+    }
+    return arr;
+};
+console.log(bubbleSort(dataBubble));
