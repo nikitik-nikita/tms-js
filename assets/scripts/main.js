@@ -63,16 +63,16 @@ products.forEach(function (item) {
 
     newProductElement.innerHTML = `
 <div class="product-information">
-     <div class="product-information_description">
+     <div class="product-cell">
              <img class="product_img" src="${item.imageLink}"/>
-           <div>
+           <div class="product-value">
              <p class="product_title">${item.title}</p>
              <p class="product_description">${item.description}</p>
            </div>
      </div>
      <div class="product-information_cost">
              <p class="product_cost_info">${item.price.currency}${item.price.value}</p>
-             <button class="add-to-basket">Add to Basket</button>
+             <button class="basket_button">Add to Basket</button>
      </div>
 </div>`
     root.appendChild(newProductElement);
