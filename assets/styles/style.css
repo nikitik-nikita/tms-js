@@ -66,32 +66,35 @@ body {
 
 .product-wrap {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-top: 25px;
-    /*height: 145px;*/
+    height: 145px;
     border-radius: 4px;
     background-color: #ffffff;
+
+
 }
 
-.product-wrap_margin {
+.product-information {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    align-items: center;
+    margin: 15px;
 }
-.product_description {
+
+.product-information_description {
     display: flex;
     justify-content: space-between;
-    margin: 15px 0 15px 15px;
+
+
 }
 .product_img {
     height: 114px;
-    /*margin: 15px 0;*/
 }
-.product-cost {
-    margin: 75px 15px 15px 0 ;
+.product-information_cost {
+
 }
-.product-cost_info {
+.product_cost_info {
     display: flex;
     justify-content: flex-end;
 }

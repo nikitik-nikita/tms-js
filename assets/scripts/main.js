@@ -62,18 +62,19 @@ products.forEach(function (item) {
     newProductElement.className = 'product-wrap';
 
     newProductElement.innerHTML = `
-    <div class="product_description">
+<div class="product-information">
+     <div class="product-information_description">
              <img class="product_img" src="${item.imageLink}"/>
-             <div>
-                  <p class="product_title">${item.title}</p>
-                  <p class="description">${item.description}</p>
-             </div>
-    </div>
-        <div class="product-cost">
-            <p class="product-cost_info">${item.price.currency}${item.price.value}</p>
-            <button class="add-to-basket">Add to Basket</button>
-        </div>
-`
+           <div>
+             <p class="product_title">${item.title}</p>
+             <p class="product_description">${item.description}</p>
+           </div>
+     </div>
+     <div class="product-information_cost">
+             <p class="product_cost_info">${item.price.currency}${item.price.value}</p>
+             <button class="add-to-basket">Add to Basket</button>
+     </div>
+</div>`
     root.appendChild(newProductElement);
 });
 
