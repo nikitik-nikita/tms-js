@@ -51,34 +51,138 @@ const products = [
     }
 ];
 
+let currentBasket = JSON.parse(localStorage.getItem('basket') ? localStorage.getItem('basket') : '[]');
 
-//
 const root = document.getElementById('root');
 
+let result = [];
 
-products.forEach(function (item) {
-    const newProductElement = document.createElement('div');
 
-    newProductElement.className = 'product-wrap';
+//разметка Продукта
+function inputItem(products) {
+    products.forEach(function (item) {
+        const newProductElement = document.createElement('div');
+        if (item.price.currency = "USD") {
+            item.price.currency = "$";
+        }
 
-    newProductElement.innerHTML = `
-<div class="product-information">
+
+
+        newProductElement.className = 'product-information';
+
+        newProductElement.innerHTML = `
+<section class="wrap _product">
      <div class="product-cell">
+     <div class="image-wrap">
              <img class="product_img" src="${item.imageLink}"/>
+             </div>
            <div class="product-value">
              <p class="product_title">${item.title}</p>
              <p class="product_description">${item.description}</p>
            </div>
      </div>
      <div class="product-information_cost">
-             <p class="product_cost_info">${item.price.currency}${item.price.value}</p>
-             <button class="basket_button">Add to Basket</button>
+             <p class="product_cost_info"=>${item.price.currency}${item.price.value.toLocaleString('en-IN')}</p>
+             <a class="add-to-basket" id="${item.id}">Add to Basket</a>
      </div>
-</div>`
-    root.appendChild(newProductElement);
+</section>`;
+
+
+        root.appendChild(newProductElement);
+
+        const button = document.getElementById(item.id);
+        if (currentBasket.find(product => product.id === item.id)) {
+            button.textContent = 'Remove from Basket';
+            button.classList.add('active');
+        }
+        document.querySelector('.circle_counter').innerHTML = currentBasket.length; //счетчик в корзине
+        document.querySelector('.amount_sum').innerHTML = currentBasket.reduce((a, b) => a + b.price.value, 0);//счетчик суммы
+
+
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.target.classList.toggle('active');
+            if (currentBasket.find(product => product.id === item.id)) {
+                event.target.textContent = 'Add to Basket';
+                currentBasket = currentBasket.filter((product) => product.id !== item.id);
+            } else {
+                event.target.textContent = 'Remove from Basket';
+                currentBasket.push(item);
+            }
+            localStorage.setItem('basket', JSON.stringify(currentBasket));
+            document.querySelector('.circle_counter').innerHTML = currentBasket.length; //счетчик в корзине
+            document.querySelector('.amount_sum').innerHTML = currentBasket.reduce((a, b) => a + b.price.value, 0);//счетчик суммы
+        })
+    });
+}
+
+result = products.slice();
+inputItem(result);
+
+
+function sortProductDesc(product) {
+    result = product.sort((a, b) =>
+        a.price.value - b.price.value
+    );
+
+    inputItem(result);
+}
+
+function sortProductAsc(product) {
+    result = product.sort((a, b) =>
+        b.price.value - a.price.value
+    );
+
+    inputItem(result);
+}
+
+let sortButton = document.getElementById('sort_value_change');
+sortButton.addEventListener("click", (event) => {
+    let sortItem = event.target;
+    root.innerHTML = '';
+    if (sortItem.textContent === 'Desc') {
+        sortItem.innerText = 'Asc';
+        sortProductDesc(result);
+    } else if (sortItem.textContent === 'Asc') {
+        sortItem.innerText = 'Desc';
+        sortProductAsc(result);
+    }
 });
 
+document.getElementById('search').addEventListener('keyup', (event) => {
+    let request = event.target.value.trim();
+
+    if (request.length >= 1) {
+        let reg = new RegExp(request, 'gi');
+        result = products.filter((product) => product.title.search(reg) !== -1 || product.description.search(reg) !== -1);
+    } else {
+        result = products.slice() || 'No results found for your request';
+    }
 
 
+    root.innerHTML = '';
 
+    if (document.getElementById('sort_value_change').textContent === 'Desc') {
+        sortProductDesc(result);
+    } else if (document.getElementById('sort_value_change').textContent === 'Asc') {
+        sortProductAsc(result);
+    }
 
+});
+
+//выделение тысячных
+// let piy = [1,2,1000,4124, 2940, 0];
+//
+// function numberWithSpaces(x) {
+//     for (i= 0; i>piy.length;i++)
+//
+//     let parts = piy.values().toString().split(".");
+//
+//     parts[i] = parts[i].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+//     return parts.join(".");
+// }
+// console.log(numberWithSpaces());
+
+//
+// let number = 350000.213;
+// console.log(number.toLocaleString('de-DE'));

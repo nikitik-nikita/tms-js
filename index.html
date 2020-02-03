@@ -10,21 +10,24 @@
 <header class="header">
     <div class="container header__container">
         <div class="logo">
-            <p>The best shop</p>
+            The best shop
         </div>
-        <div class="search">
             <input class="search-field" id="search" type="text" placeholder="Search">
-<!--            <label class="search-field_label" for="search">Search</label>-->
-        </div>
         <div class="basket">
-            <div class="circle"><p class="circle_counter">3</p></div>
+            <div class="circle_counter">0</div>
             <p>Basket</p>
-            <p class="amount">amount:<span class="amount_sum">#</span></p>
+            <p class="amount">amount: <span class="amount_sum">0</span>$</p>
         </div>
     </div>
 </header>
 <section class="product-price">
-    <div id="root" class="container product-price__container">
+    <div class="container _product-table">
+        <div class="wrap _sort sort-elements">
+            <p class="sort-value">Electronics</p>
+            <p class="sort-value">Sort by price: <a class="change_value" id="sort_value_change">Desc</a></p>
+        </div>
+        <div id="root" class="product-price__container">
+        </div>
     </div>
 </section>
 
