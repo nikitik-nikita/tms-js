@@ -16,6 +16,7 @@
 
 body {
     overflow: auto;
+    background: #d8d8d8;
 }
 
 
@@ -108,10 +109,10 @@ body {
     cursor: pointer;
 }
 .product-price {
-    overflow: auto;
-    width: 100%;
-    height: 100vh;
-    background: #d8d8d8;
+    /*overflow: auto;*/
+    /*width: 100%;*/
+    /*height: 100vh;*/
+    /*background: #d8d8d8;*/
 }
 
 .wrap {
@@ -148,11 +149,12 @@ body {
 .image-wrap {
     display: flex;
     justify-content: center;
-    height: 115px;
-    width: 175px;
+    /*height: 115px;*/
+    /*width: 175px;*/
 }
 .product_img {
     height: 115px;
+    width: 175px;
 }
 .product-value {
     margin-left: 23px;
