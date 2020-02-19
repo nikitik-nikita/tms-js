@@ -1,5 +1,18 @@
 (async function f() {
 
+//данные с моего сервера
+//     const productData = [];
+
+
+    // const serverData = await fetch('http://localhost:8000/api/catalog')
+    //     .then(respons => respons.json())
+    //     .then(data => data)
+    //     .catch(err => {
+    //         err.message;
+    //         return [];
+    //     });
+
+
 
     const products = [
         {
@@ -56,13 +69,12 @@
 
     let currentBasket = JSON.parse(localStorage.getItem('basket') ? localStorage.getItem('basket') : '[]');
 
-    const root = document.getElementById('root');
+    const rootEl = document.getElementById('rootEl');
 
-    let result = [];
+    let currentResult = [];
 
     const url = 'http://www.nbrb.by/api/exrates/rates/usd?parammode=2';
-
-    let kurs = await fetch(url)
+    let curs = await fetch(url)
         .then(respons => respons.json())
         .then(data => data)
         .catch(err => err.message);
@@ -71,8 +83,8 @@
 //разметка Продукта
     function inputItem(products) {
 
-        if (result.length === 0) {
-            root.innerHTML = 'No results found for your request';
+        if (currentResult.length === 0) {
+            rootEl.innerHTML = 'No results found for your request';
         } else {
             products.forEach(function (item) {
                 const newProductElement = document.createElement('div');
@@ -83,30 +95,30 @@
                 newProductElement.className = 'product-information';
 
                 newProductElement.innerHTML = `
-<section class="wrap _product">
-     <div class="product-cell">
-     <div class="image-wrap">
-             <img class="product_img" src="${item.imageLink}"/>
-             </div>
-           <div class="product-value">
-             <p class="product_title">${item.title}</p>
-             <p class="product_description">${item.description}</p>
-           </div>
-     </div>
-     <div class="product-information_cost">
-             <p class="product_cost_info"=>${item.price.currency} ${(item.price.value*kurs.Cur_OfficialRate).toLocaleString('en-En')}</p>
-             <a class="add-to-basket" id="${item.id}">Add to Basket</a>
-     </div>
-</section>`;
+                    <div class="wrap _product">
+                         <div class="product-cell">
+                            <div class="product--image-wrap">
+                                <img class="product_img" src="${item.imageLink}"/>
+                            </div>
+                            <div class="product--value">
+                                <p class="product_title">${item.title}</p>
+                                <p class="product_description">${item.description}</p>
+                            </div>
+                         </div>
+                         <div class="product--information_cost">
+                            <p class="product_cost-info"=>${item.price.currency} ${(item.price.value*curs.Cur_OfficialRate).toLocaleString('en-En')}</p>
+                            <a class="add-to-basket" id="${item.id}">Add to Basket</a>
+                         </div>
+                    </div>`;
 
-                root.appendChild(newProductElement);
+                rootEl.appendChild(newProductElement);
 
                 const button = document.getElementById(item.id);
                 if (currentBasket.find(product => product.id === item.id)) {
                     button.textContent = 'Remove from Basket';
                     button.classList.add('active');
                 }
-                document.querySelector('.circle_counter').innerHTML = currentBasket.length; //счетчик в корзине
+                document.querySelector('.basket--circle_counter').innerHTML = currentBasket.length; //счетчик в корзине
                 document.querySelector('.amount_sum').innerHTML = currentBasket.reduce((a, b) => a + b.price.value, 0);//счетчик суммы
 
 
@@ -121,43 +133,44 @@
                         currentBasket.push(item);
                     }
                     localStorage.setItem('basket', JSON.stringify(currentBasket));
-                    document.querySelector('.circle_counter').innerHTML = currentBasket.length; //счетчик в корзине
+                    document.querySelector('.basket--circle_counter').innerHTML = currentBasket.length; //счетчик в корзине
                     document.querySelector('.amount_sum').innerHTML = currentBasket.reduce((a, b) => a + b.price.value, 0);//счетчик суммы
                 })
             });
         }
     }
 
-    result = products.slice();
-    inputItem(result);
+    currentResult = products.slice();
+
+    inputItem(currentResult);
 
 
     function sortProductDesc(product) {
-        result = product.sort((a, b) =>
+        currentResult = product.sort((a, b) =>
             a.price.value - b.price.value
         );
 
-        inputItem(result);
+        inputItem(currentResult);
     }
 
     function sortProductAsc(product) {
-        result = product.sort((a, b) =>
+        currentResult = product.sort((a, b) =>
             b.price.value - a.price.value
         );
 
-        inputItem(result);
+        inputItem(currentResult);
     }
 
     let sortButton = document.getElementById('sort_value_change');
     sortButton.addEventListener("click", (event) => {
         let sortItem = event.target;
-        root.innerHTML = '';
+        rootEl.innerHTML = '';
         if (sortItem.textContent === 'Desc') {
             sortItem.innerText = 'Asc';
-            sortProductAsc(result);
+            sortProductAsc(currentResult);
         } else if (sortItem.textContent === 'Asc') {
             sortItem.innerText = 'Desc';
-            sortProductDesc(result);
+            sortProductDesc(currentResult);
         }
     });
 
@@ -166,37 +179,45 @@
 
         if (request.length >= 1) {
             let reg = new RegExp(request, 'gi');
-            result = products.filter((product) => product.title.search(reg) !== -1 || product.description.search(reg) !== -1);
+            currentResult = products.filter((product) => product.title.search(reg) !== -1 || product.description.search(reg) !== -1);
         } else {
-            result = products.slice();
+            currentResult = products.slice();
         }
 
 
-        // else {
-        //     return root.innerHTML = 'No results found for your request';
-        // }
-
-
-        root.innerHTML = '';
+        rootEl.innerHTML = '';
         if (document.getElementById('sort_value_change').textContent === 'Desc') {
-            sortProductDesc(result);
+            sortProductDesc(currentResult);
         } else if (document.getElementById('sort_value_change').textContent === 'Asc') {
-            sortProductAsc(result);
+            sortProductAsc(currentResult);
         }
-        //
-        // if (request.textContent === 'Desc') {
-        //     request.innerText = 'Asc';
-        //     sortProductDesc(result);
-        // } else if (request.textContent === 'Asc') {
-        //     request.innerText = 'Desc';
-        //     sortProductAsc(result);
-        // }
+
     })
 }());
-//выделение тысячных
-// let number = 35000000.213;
-// console.log(number.toLocaleString(/\B(?=(\d{3})+\.(?!\d)2)/g, " "));
 
 
-//API
+
+// classes
+
+class Products {
+    constructor ({products, basket,  }) {
+        this.textButton = textButton;
+        this.textActiveButton = textActiveButton;
+        this.rootEl = rootEl;
+    }
+
+    async getData() {
+    const products = await fetch('http://localhost:8000/api/catalog')
+        .then(respons => respons.json())
+        .then(data => data)
+        .catch(err => {
+            err.message;
+            return [];
+        });
+    this.defaultData = [...products];
+    this.currentData = [...products];
+
+    }
+
+}
 

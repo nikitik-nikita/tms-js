@@ -1,7 +1,9 @@
 @import url('fonts.css');
 
 :root {
-
+    --base-1-color: #252525;
+    --base-2-color: #ffffff;
+    --base-3-color: #ff8b38;
 }
 
 * {
@@ -22,7 +24,7 @@ body {
 
 .header {
     width: 100%;
-    background: #252525;
+    background: var(--base-1-color);
 
 }
 
@@ -47,13 +49,6 @@ body {
     flex-direction: column;
 }
 
-.logo {
-
-}
-.search {
-
-}
-
 .search-field {
     width: 400px;
     height: 25px;
@@ -63,23 +58,18 @@ body {
     padding-left: 5px;
 }
 
-.basket {
-    width: 70px;
-    height: 53px;
-}
-.circle_counter {
+
+.basket--circle_counter {
     font-size: 9px;
     font-weight: 400;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    left: 50px;
-    bottom: -13px;
-    width: 15px;
+    min-width: 15px;
     height: 15px;
-    color: #ffffff;
-    background: #ff8b38;
+    color: var(--base-2-color);
+    background: var(--base-3-color);
+    transform: translateY(-10px);
     border-radius: 50%
 }
 
@@ -98,7 +88,7 @@ body {
  */
 .sort-elements {
     border-radius: 4px;
-    background-color: #ffffff;
+    background-color: var(--base-2-color);
 }
 
 .sort-value {
@@ -108,12 +98,7 @@ body {
 .change_value {
     cursor: pointer;
 }
-.product-price {
-    /*overflow: auto;*/
-    /*width: 100%;*/
-    /*height: 100vh;*/
-    /*background: #d8d8d8;*/
-}
+
 
 .wrap {
     width: 100%;
@@ -137,7 +122,7 @@ body {
     margin-top: 25px;
 
     border-radius: 4px;
-    background-color: #ffffff;
+    background-color: var(--base-2-color);
 }
 
 .product-cell {
@@ -146,17 +131,16 @@ body {
     align-items: center;
 }
 
-.image-wrap {
-    display: flex;
-    justify-content: center;
-    /*height: 115px;*/
-    /*width: 175px;*/
+.product--image-wrap {
+    width: 175px;
+    height: 115px;
+    text-align: center;
 }
 .product_img {
-    height: 115px;
-    width: 175px;
+    max-width: 100%;
+    max-height: 100%;
 }
-.product-value {
+.product--value {
     margin-left: 23px;
     display: flex;
     flex-direction: column;
@@ -168,11 +152,11 @@ body {
 .product_description {
     font-size: 12px;
 }
-.product-information_cost {
+.product--information_cost {
     position: relative;
     bottom: -27px;
 }
-.product_cost_info {
+.product_cost-info {
     display: flex;
     justify-content: flex-end;
     font-size: 16px;
@@ -183,19 +167,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
+    color: var(--base-2-color);
     width: 270px;
     height: 35px;
-    background-color: #ff8b38;
+    background-color: var(--base-3-color);
     border-style: none;
     border-radius: 3px;
     padding: 0;
     cursor: pointer;
 }
 .active {
-    background-color: #252525;
+    background-color: var(--base-1-color);
 }
-
 
 .product-price__container:last-child {
     padding-bottom: 15px;
